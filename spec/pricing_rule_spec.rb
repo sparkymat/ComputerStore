@@ -14,15 +14,33 @@ describe PricingRule do
       let(:deal_value)    { 2        }
       let(:deal_item)     { nil      }
 
-      let(:sku)           { 'ipd'    }
+      let(:sku)           { 'atv'    }
       let(:count)         { 3        }
-      let(:price_cents)   { 54_999   }
+      let(:price_cents)   { 109_50   }
 
       it 'returns the calculated item list and total' do
         result = apply_rule
         expect(result).to_not be_nil
-        expect(result[:items]).to contain_exactly(sku: 'ipd', count: 3)
-        expect(result[:total_cents]).to eq 54_999 * 2
+        expect(result[:items]).to contain_exactly(sku: 'atv', count: 3)
+        expect(result[:total_cents]).to eq 109_50 * 2
+      end
+    end
+
+    context 'bulk discount' do
+      let(:rule_type)     { :bulk_discount }
+      let(:trigger_value) { 4        }
+      let(:deal_value)    { 499_99   }
+      let(:deal_item)     { nil      }
+
+      let(:sku)           { 'ipd'    }
+      let(:count)         { 7        }
+      let(:price_cents)   { 549_99   }
+
+      it 'returns the calculated item list and total' do
+        result = apply_rule
+        expect(result).to_not be_nil
+        expect(result[:items]).to contain_exactly(sku: 'ipd', count: 7)
+        expect(result[:total_cents]).to eq 499_99 * 7
       end
     end
   end
