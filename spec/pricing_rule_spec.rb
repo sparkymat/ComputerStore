@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../app/pricing_rule'
-
 describe PricingRule do
   let(:pricing_rule) { described_class.new(rule_type: rule_type, trigger_value: trigger_value, deal_value: deal_value, deal_item: deal_item) }
 
