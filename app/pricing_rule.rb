@@ -32,6 +32,22 @@ class PricingRule
         total_cents: total_cents,
       }
     when :bulk_discount
+      items = []
+      items << { sku: sku, count: count }
+
+      applied_price_cents = case
+                            when count >= @trigger_value
+                              @deal_value
+                            else
+                              price_cents
+                            end
+
+      total_cents = applied_price_cents * count
+
+      result = {
+        items:       items,
+        total_cents: total_cents,
+      }
     when :free_items
     else
       raise 'unknown rule type'
