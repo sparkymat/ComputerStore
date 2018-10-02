@@ -49,6 +49,19 @@ class PricingRule
         total_cents: total_cents,
       }
     when :free_items
+      items = []
+      items << { sku: sku, count: count }
+
+      total_cents = price_cents * count
+
+      deal_count = (count / @trigger_value ) * @deal_value
+
+      items << { sku: @deal_item, count: deal_count }
+
+      result = {
+        items:       items,
+        total_cents: total_cents,
+      }
     else
       raise 'unknown rule type'
     end
