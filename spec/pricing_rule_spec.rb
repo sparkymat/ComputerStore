@@ -43,5 +43,23 @@ describe PricingRule do
         expect(result[:total_cents]).to eq 499_99 * 7
       end
     end
+
+    context 'free items' do
+      let(:rule_type)     { :free_items }
+      let(:trigger_value) { 1           }
+      let(:deal_value)    { 1           }
+      let(:deal_item)     { 'vga'       }
+
+      let(:sku)           { 'mbp'    }
+      let(:count)         { 2        }
+      let(:price_cents)   { 1399_99  }
+
+      it 'returns the calculated item list and total' do
+        result = apply_rule
+        expect(result).to_not be_nil
+        expect(result[:items]).to contain_exactly({ sku: 'mbp', count: 2 }, { sku: 'vga', count: 2 })
+        expect(result[:total_cents]).to eq 1_399_99 * 2
+      end
+    end
   end
 end
