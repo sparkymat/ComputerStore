@@ -19,8 +19,8 @@ class Item
       price_cents: 109_50,
     },
     'vga' => {
-      name: 'Apple TV',
-      price_cents: 109_50,
+      name: 'VGA adapter',
+      price_cents: 30_00,
     },
   }.freeze
 
@@ -29,8 +29,12 @@ class Item
   end
 
   def details
-    @details ||= OpenStruct.new(DETAILS[@sku].merge(sku: @sku))
+    @details ||= OpenStruct.new(self.inspect)
 
     @details
+  end
+
+  def inspect
+    DETAILS[@sku].merge(sku: @sku)
   end
 end
